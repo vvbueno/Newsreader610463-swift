@@ -10,13 +10,13 @@ import Foundation
 struct Article: Decodable {
     
     let id: Int
-    let feedId: Int
+    let feedId: Int?
     let title: String
     let publishDate: String
-    let image: URL
+    let image: URL?
     let url: URL
-    let related: [String]
-    let categories: [Category]
+    let related: [String]?
+    let categories: [Category]?
     let isLiked: Bool
     
     enum CodingKeys: String, CodingKey {

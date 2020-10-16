@@ -41,6 +41,8 @@ final class NewsReaderAPI: ObservableObject {
     private let keychain = Keychain()
     private var accessTokenKeyChainKey = "accessToken"
     
+    private var cancellable: AnyCancellable?
+    
     
     var accessToken: String? {
         get{
@@ -87,7 +89,7 @@ final class NewsReaderAPI: ObservableObject {
         
         let url = URL(string: Endpoints.Articles.getArticles)!
         
-        URLSession.shared.dataTaskPublisher(for: url)
+        cancellable = URLSession.shared.dataTaskPublisher(for: url)
             .map({$0.data})
             .decode(type: GetArticlesResponse.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
@@ -105,10 +107,42 @@ final class NewsReaderAPI: ObservableObject {
                     default:
                         print(RequestError.genericError(error))
                     }
-                
                 }
             }) { response in
                 completion(.success(response.articles))
+                print(response.articles)
+                print(response.nextArticleId)
+            }
+    }
+    
+    func getArticle(of article: Article,
+                    completion: @escaping (Result<Article?, RequestError>) -> Void){
+        
+        let endpointWithId = Endpoints.Articles.getArticle.replacingOccurrences(of: "{id}", with: String(article.id))
+        
+        let url = URL(string: endpointWithId)!
+        
+        cancellable = URLSession.shared.dataTaskPublisher(for: url)
+            .map({$0.data})
+            .decode(type: GetArticlesResponse.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure(let error):
+                    switch error {
+                    case let urlError as URLError:
+                        completion(.failure(RequestError.urlError(urlError)))
+                        print(RequestError.urlError(urlError))
+                    case let decodingError as DecodingError:
+                        print(RequestError.decodingError(decodingError))
+                    default:
+                        print(RequestError.genericError(error))
+                    }
+                }
+            }) { response in
+                completion(.success(response.articles.first))
                 print(response.articles)
                 print(response.nextArticleId)
             }
