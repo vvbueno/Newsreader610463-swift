@@ -85,13 +85,13 @@ final class NewsReaderAPI: ObservableObject {
         accessToken = nil
     }
     
-    func getArticles(completion: @escaping (Result<[Article], RequestError>) -> Void){
+    func getArticlesList(completion: @escaping (Result<[Article], RequestError>) -> Void){
         
         let url = URL(string: Endpoints.Articles.getArticles)!
         
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
             .map({$0.data})
-            .decode(type: GetArticlesResponse.self, decoder: JSONDecoder())
+            .decode(type: GetArticlesListResponse.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { result in
                 switch result {
@@ -110,13 +110,11 @@ final class NewsReaderAPI: ObservableObject {
                 }
             }) { response in
                 completion(.success(response.articles))
-                print(response.articles)
-                print(response.nextArticleId)
             }
     }
     
-    func getArticle(of article: Article,
-                    completion: @escaping (Result<Article?, RequestError>) -> Void){
+    func getArticleDetails(of article: Article,
+                    completion: @escaping (Result<ArticleDetails?, RequestError>) -> Void){
         
         let endpointWithId = Endpoints.Articles.getArticle.replacingOccurrences(of: "{id}", with: String(article.id))
         
@@ -124,7 +122,7 @@ final class NewsReaderAPI: ObservableObject {
         
         cancellable = URLSession.shared.dataTaskPublisher(for: url)
             .map({$0.data})
-            .decode(type: GetArticlesResponse.self, decoder: JSONDecoder())
+            .decode(type: GetArticlesDetailsResponse.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { result in
                 switch result {
@@ -142,9 +140,8 @@ final class NewsReaderAPI: ObservableObject {
                     }
                 }
             }) { response in
+                print(response.articles.first!)
                 completion(.success(response.articles.first))
-                print(response.articles)
-                print(response.nextArticleId)
             }
     }
 }

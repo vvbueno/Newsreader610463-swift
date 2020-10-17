@@ -11,13 +11,33 @@ struct ArticleDetailsView: View {
     
     let article: Article
     
+    @State var articleDetails: ArticleDetails? = nil
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
-}
-
-struct ArticleDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        ArticleDetailsView()
+        if let articleDetails = articleDetails {
+           Text("Pokedex #\(articleDetails.id)")
+               .padding()
+            Text("#\(articleDetails.title)")
+                .padding()
+        } else{
+            ProgressView("Loadig details...")
+                .onAppear {
+                    NewsReaderAPI.shared.getArticleDetails(of: article) { (result) in
+                        switch result {
+                        case .success(let articleDetails):
+                            self.articleDetails = articleDetails
+                        case .failure(let error):
+                            switch error {
+                            case .urlError(let urlError):
+                                print(urlError)
+                            case .decodingError(let decodingError):
+                                print(decodingError)
+                            case .genericError(let error):
+                                print(error)
+                            }
+                        }
+                    }
+                }
+        }
     }
 }

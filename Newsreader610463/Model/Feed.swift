@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Feed: Decodable {
+struct Feed: Decodable, Identifiable {
 
     let id: Int
     let name: String

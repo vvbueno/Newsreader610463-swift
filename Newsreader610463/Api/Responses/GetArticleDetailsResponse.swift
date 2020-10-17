@@ -1,15 +1,15 @@
 //
-//  GetArticlesResponse.swift
+//  GetArticleDetailsResponse.swift
 //  Newsreader610463
 //
-//  Created by Vicente on 12/10/2020.
+//  Created by Vicente on 17/10/2020.
 //
 
 import Foundation
 
-struct GetArticlesResponse: Decodable {
+struct GetArticlesDetailsResponse: Decodable {
     
-    let articles: [Article]
+    let articles: [ArticleDetails]
     let nextArticleId: Int
     
     enum CodingKeys: String, CodingKey {
