@@ -10,32 +10,9 @@ import Combine
 import KeychainAccess
 import SwiftUI
 
-struct Endpoints {
-    
-    static let apiUrl = "https://inhollandbackend.azurewebsites.net/api"
-    
-    struct Authentication {
-        static let login = apiUrl + "/Users/login"
-        static let register = apiUrl + "/Users/register"
-    }
-    
-    struct Articles {
-        static let getArticles = apiUrl + "/Articles"
-        static let getArticle = apiUrl + "/Articles/{id}"
-        static let getLikedArticles = apiUrl + "/Articles/liked"
-        static let likeArticle = apiUrl + "/Articles/{id}/like"
-    }
-    
-    struct Feeds {
-        static let getFeeds = apiUrl + "/Feeds"
-    }
-}
-
 final class NewsReaderAPI: ObservableObject {
     
     static let shared = NewsReaderAPI()
-    
-    //private var apiUrl = "https://inhollandbackend.azurewebsites.net/api"
     
     @Published var isAuthenticated: Bool = false
     
