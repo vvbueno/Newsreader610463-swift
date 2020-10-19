@@ -69,7 +69,9 @@ final class NewsReaderAPI: ObservableObject {
             }
     }
     
-    func login(username: String, password: String){
+    func login(username: String,
+               password: String,
+               completion: @escaping (Result<LoginResponse, RequestError>) -> Void){
         
         let url = URL(string: Endpoints.Authentication.login)!
         
@@ -84,6 +86,8 @@ final class NewsReaderAPI: ObservableObject {
         
         guard let body = try? JSONEncoder().encode(parameters) else {return}
         urlRequest.httpBody = body
+        
+        execute(request: urlRequest, completion: completion)
     }
     
     

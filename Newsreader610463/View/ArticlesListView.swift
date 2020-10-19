@@ -33,8 +33,10 @@ struct ArticlesListView: View {
                             }
                         }
                     }
-                }.navigationTitle("Very tasty!")
-            }
+                }.navigationTitle("List of articles")
+            }.navigationBarItems(trailing: NavigationLink(destination: Text("Login View"), label:{
+                Text("Login")
+            }))
         } else {
             ProgressView("Loadig articles...")
                 .onAppear {
