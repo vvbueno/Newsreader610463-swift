@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import KeychainAccess
+import SwiftUI
 
 struct Endpoints {
     
@@ -63,6 +64,34 @@ final class NewsReaderAPI: ObservableObject {
         isAuthenticated = accessToken != nil
     }
     
+    func execute<Response:Decodable>(
+        request: URLRequest,
+        completion: @escaping (Result<Response, RequestError>) -> Void){
+        
+        cancellable = URLSession.shared.dataTaskPublisher(for: request)
+            .map({$0.data})
+            .decode(type: Response.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure(let error):
+                    switch error {
+                    case let urlError as URLError:
+                        completion(.failure(RequestError.urlError(urlError)))
+                        print(RequestError.urlError(urlError))
+                    case let decodingError as DecodingError:
+                        print(RequestError.decodingError(decodingError))
+                    default:
+                        print(RequestError.genericError(error))
+                    }
+                }
+            }) { response in
+                completion(.success(response))
+            }
+    }
+    
     func login(username: String, password: String){
         
         let url = URL(string: Endpoints.Authentication.login)!
@@ -85,63 +114,37 @@ final class NewsReaderAPI: ObservableObject {
         accessToken = nil
     }
     
-    func getArticlesList(completion: @escaping (Result<[Article], RequestError>) -> Void){
+    func getArticlesList(completion: @escaping (Result<GetArticlesListResponse, RequestError>) -> Void){
         
         let url = URL(string: Endpoints.Articles.getArticles)!
         
-        cancellable = URLSession.shared.dataTaskPublisher(for: url)
-            .map({$0.data})
-            .decode(type: GetArticlesListResponse.self, decoder: JSONDecoder())
-            .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { result in
-                switch result {
-                case .finished:
-                    break
-                case .failure(let error):
-                    switch error {
-                    case let urlError as URLError:
-                        completion(.failure(RequestError.urlError(urlError)))
-                        print(RequestError.urlError(urlError))
-                    case let decodingError as DecodingError:
-                        print(RequestError.decodingError(decodingError))
-                    default:
-                        print(RequestError.genericError(error))
-                    }
-                }
-            }) { response in
-                completion(.success(response.articles))
-            }
+        execute(request: URLRequest(url: url), completion: completion)
     }
     
     func getArticleDetails(of article: Article,
-                    completion: @escaping (Result<ArticleDetails?, RequestError>) -> Void){
+                    completion: @escaping (Result<GetArticlesDetailsResponse, RequestError>) -> Void){
         
         let endpointWithId = Endpoints.Articles.getArticle.replacingOccurrences(of: "{id}", with: String(article.id))
-        
         let url = URL(string: endpointWithId)!
         
-        cancellable = URLSession.shared.dataTaskPublisher(for: url)
-            .map({$0.data})
-            .decode(type: GetArticlesDetailsResponse.self, decoder: JSONDecoder())
+        execute(request: URLRequest(url: url), completion: completion)
+    }
+    
+    
+    func getImage(for urlRequest: URLRequest, completion: @escaping (Result<UIImage, RequestError>) -> Void){
+        cancellable = URLSession.shared.dataTaskPublisher(for: urlRequest)
+            .map({ UIImage(data: $0.data) ?? UIImage()})
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { result in
                 switch result {
                 case .finished:
                     break
                 case .failure(let error):
-                    switch error {
-                    case let urlError as URLError:
-                        completion(.failure(RequestError.urlError(urlError)))
-                        print(RequestError.urlError(urlError))
-                    case let decodingError as DecodingError:
-                        print(RequestError.decodingError(decodingError))
-                    default:
-                        print(RequestError.genericError(error))
-                    }
+                    print(RequestError.urlError(error))
                 }
-            }) { response in
-                print(response.articles.first!)
-                completion(.success(response.articles.first))
+            }) { image in
+                completion(.success(image))
             }
     }
+    
 }

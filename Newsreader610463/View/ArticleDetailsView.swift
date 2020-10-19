@@ -19,13 +19,15 @@ struct ArticleDetailsView: View {
                .padding()
             Text("#\(articleDetails.title)")
                 .padding()
-        } else{
+            Text("#\(articleDetails.image?.absoluteString ?? "")")
+                .padding()
+        } else {
             ProgressView("Loadig details...")
                 .onAppear {
                     NewsReaderAPI.shared.getArticleDetails(of: article) { (result) in
                         switch result {
-                        case .success(let articleDetails):
-                            self.articleDetails = articleDetails
+                        case .success(let result):
+                            self.articleDetails = result.articles.first
                         case .failure(let error):
                             switch error {
                             case .urlError(let urlError):
