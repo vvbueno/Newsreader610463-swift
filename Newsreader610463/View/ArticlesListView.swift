@@ -19,45 +19,42 @@ struct ArticlesListView: View {
     
     var body: some View {
         
-        if let articles = articles {
-            NavigationView{
-                ScrollView{
-                    LazyVGrid(columns: columns, spacing: 0){
-                        ForEach(articles) { article in
-                            NavigationLink(destination:
-                                ArticleDetailsView(article: article)
-                                    .navigationTitle(article.title)
-                            ) {
-                                AritcleRowView(article: article)
-                                    .padding()
+        VStack{
+            if let articles = articles {
+                    ScrollView{
+                        LazyVGrid(columns: columns, spacing: 0){
+                            ForEach(articles) { article in
+                                NavigationLink(destination:
+                                    ArticleDetailsView(article: article)
+                                        .navigationTitle(article.title)
+                                ) {
+                                    AritcleRowView(article: article)
+                                        .padding()
+                                }
                             }
                         }
                     }
-                }.navigationTitle("List of articles")
-            }.navigationBarItems(trailing: NavigationLink(destination: Text("Login View"), label:{
-                Text("Login")
-            }))
-        } else {
-            ProgressView("Loadig articles...")
-                .onAppear {
-                    NewsReaderAPI.shared.getArticlesList() { (result) in
-                        switch result {
-                        case .success(let result):
-                            self.articles = result.articles
-                        case .failure(let error):
-                            switch error {
-                            case .urlError(let urlError):
-                                print(urlError)
-                            case .decodingError(let decodingError):
-                                print(decodingError)
-                            case .genericError(let error):
-                                print(error)
+            } else {
+                ProgressView("Loadig articles...")
+                    .onAppear {
+                        NewsReaderAPI.shared.getArticlesList() { (result) in
+                            switch result {
+                            case .success(let result):
+                                self.articles = result.articles
+                            case .failure(let error):
+                                switch error {
+                                case .urlError(let urlError):
+                                    print(urlError)
+                                case .decodingError(let decodingError):
+                                    print(decodingError)
+                                case .genericError(let error):
+                                    print(error)
+                                }
                             }
                         }
                     }
-                }
-        }
-        
+            }
+        }.navigationTitle("List of articles")
     }
 }
 

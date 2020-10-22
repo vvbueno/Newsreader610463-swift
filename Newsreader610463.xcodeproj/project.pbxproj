@@ -26,8 +26,6 @@
 		E9C74E2D253B3FDF0003E088 /* ArticleDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E2C253B3FDF0003E088 /* ArticleDetails.swift */; };
 		E9C74E30253B41640003E088 /* GetArticleDetailsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E2F253B41640003E088 /* GetArticleDetailsResponse.swift */; };
 		E9C74E36253B5B630003E088 /* AritcleRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E35253B5B630003E088 /* AritcleRowView.swift */; };
-		E9C74E43253B9C670003E088 /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = E9C74E42253B9C670003E088 /* SDWebImage */; };
-		E9C74E45253B9C670003E088 /* SDWebImageMapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E9C74E44253B9C670003E088 /* SDWebImageMapKit */; };
 		E9C74E48253E15350003E088 /* UrlImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E47253E15350003E088 /* UrlImage.swift */; };
 		E9C74E4D253E15B60003E088 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E4C253E15B60003E088 /* ImageCache.swift */; };
 		E9C74E51253E161D0003E088 /* UrlImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E50253E161D0003E088 /* UrlImageView.swift */; };
@@ -72,8 +70,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E9C74E43253B9C670003E088 /* SDWebImage in Frameworks */,
-				E9C74E45253B9C670003E088 /* SDWebImageMapKit in Frameworks */,
 				E98551AB25337B0600059CD4 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,8 +208,6 @@
 			name = Newsreader610463;
 			packageProductDependencies = (
 				E98551AA25337B0600059CD4 /* KeychainAccess */,
-				E9C74E42253B9C670003E088 /* SDWebImage */,
-				E9C74E44253B9C670003E088 /* SDWebImageMapKit */,
 			);
 			productName = Newsreader610463;
 			productReference = E98551922533718F00059CD4 /* Newsreader610463.app */;
@@ -244,7 +238,6 @@
 			mainGroup = E98551892533718E00059CD4;
 			packageReferences = (
 				E98551A925337B0600059CD4 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				E9C74E41253B9C670003E088 /* XCRemoteSwiftPackageReference "SDWebImage" */,
 			);
 			productRefGroup = E98551932533718F00059CD4 /* Products */;
 			projectDirPath = "";
@@ -422,8 +415,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Newsreader610463/Preview Content\"";
+				DEVELOPMENT_TEAM = G346F25N5X;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Newsreader610463/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -433,6 +428,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nl.henry.bueno.Newsreader610463;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -443,8 +439,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Newsreader610463/Preview Content\"";
+				DEVELOPMENT_TEAM = G346F25N5X;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Newsreader610463/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -454,6 +452,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nl.henry.bueno.Newsreader610463;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -491,14 +490,6 @@
 				minimumVersion = 4.2.1;
 			};
 		};
-		E9C74E41253B9C670003E088 /* XCRemoteSwiftPackageReference "SDWebImage" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SDWebImage/SDWebImage";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.9.3;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -506,16 +497,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E98551A925337B0600059CD4 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
 			productName = KeychainAccess;
-		};
-		E9C74E42253B9C670003E088 /* SDWebImage */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E9C74E41253B9C670003E088 /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImage;
-		};
-		E9C74E44253B9C670003E088 /* SDWebImageMapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E9C74E41253B9C670003E088 /* XCRemoteSwiftPackageReference "SDWebImage" */;
-			productName = SDWebImageMapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

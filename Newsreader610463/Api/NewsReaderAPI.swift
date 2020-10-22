@@ -59,8 +59,10 @@ final class NewsReaderAPI: ObservableObject {
                         completion(.failure(RequestError.urlError(urlError)))
                         print(RequestError.urlError(urlError))
                     case let decodingError as DecodingError:
+                        completion(.failure(RequestError.decodingError(decodingError)))
                         print(RequestError.decodingError(decodingError))
                     default:
+                        completion(.failure(RequestError.genericError(error)))
                         print(RequestError.genericError(error))
                     }
                 }
