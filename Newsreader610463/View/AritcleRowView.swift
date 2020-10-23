@@ -15,11 +15,25 @@ struct AritcleRowView: View {
     
     var body: some View {
         
-        UrlImageView(url: article.image, width: 54, height: 54)
-        
-        VStack(alignment: .center){
-            Text(article.title)
-                .font(.title3)
+        HStack(spacing: 20){
+            
+            VStack(alignment: .leading){
+                VStack(){
+                    UrlImageView(url: article.image, width: 54, height: 54)
+                }.overlay(Group {
+                    ZStack {
+                        if(article.isLiked){
+                            Image(systemName: "heart.fill")
+                                .foregroundColor(.red)
+                        }
+                    }.frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+               })
+            }
+            
+            VStack(alignment: .leading){
+                Text(article.title)
+                    .font(.title3)
+            }
         }
 
     }

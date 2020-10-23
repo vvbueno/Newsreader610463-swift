@@ -16,19 +16,20 @@ struct ContentView: View {
             
             if newsReaderApi.isAuthenticated{
                 VStack {
-                    ArticlesListView()
+                    HomepageView()
                 }.navigationTitle("News Reader")
                 .navigationBarItems(leading: Button(action: { newsReaderApi.logout() }, label: {
                     Image(systemName: "escape")
                 }),
                 trailing: NavigationLink(
-                    destination: Text("Favorite Articles"),
+                    destination: FavoritesView(),
                     label: {
-                        Image(systemName: "star")
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.red)
                     }))
             } else {
                 VStack {
-                    ArticlesListView()
+                    HomepageView()
                 }.navigationTitle("News Reader")
                 .navigationBarItems(trailing: NavigationLink(
                     destination: LoginView(),

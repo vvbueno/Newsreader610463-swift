@@ -17,4 +17,6 @@ struct Category: Decodable, Identifiable {
         case name = "Name"
     }
     
+    static let testData = [ Category(id:4270,name: "Sport"), Category(id:4277,name: "Voetbal") ]
+    
 }

@@ -17,4 +17,6 @@ struct Feed: Decodable, Identifiable {
         case name = "Name"
     }
     
+    static let testData = [ Feed(id: 1, name: "Algemeen"), Feed(id: 2, name: "Internet"), Feed(id: 3, name: "Sport"), Feed(id: 4, name: "Opmerkelijk") ]
+    
 }

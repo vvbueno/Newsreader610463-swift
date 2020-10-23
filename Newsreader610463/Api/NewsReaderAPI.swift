@@ -45,6 +45,12 @@ final class NewsReaderAPI: ObservableObject {
         request: URLRequest,
         completion: @escaping (Result<Response, RequestError>) -> Void){
         
+        var request = request
+        
+        if(isAuthenticated){
+            request.setValue(self.accessToken, forHTTPHeaderField: "x-authtoken")
+        }
+        
         cancellable = URLSession.shared.dataTaskPublisher(for: request)
             .map({$0.data})
             .decode(type: Response.self, decoder: JSONDecoder())
@@ -109,6 +115,14 @@ final class NewsReaderAPI: ObservableObject {
         
         let endpointWithId = Endpoints.Articles.getArticle.replacingOccurrences(of: "{id}", with: String(article.id))
         let url = URL(string: endpointWithId)!
+        
+        
+        execute(request: URLRequest(url: url), completion: completion)
+    }
+    
+    func getLikedArticlesList(completion: @escaping (Result<GetArticlesListResponse, RequestError>) -> Void){
+        
+        let url = URL(string: Endpoints.Articles.getLikedArticles)!
         
         execute(request: URLRequest(url: url), completion: completion)
     }
