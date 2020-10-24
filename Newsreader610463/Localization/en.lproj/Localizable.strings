@@ -18,7 +18,7 @@
 "password_do_not_match" = "Password fields do not match";
 "logged_in_as" = "You are logged in as:";
 "switch_language" = "Switch to Spanish";
-"back" = "Back";
+"back_button" = "Back";
 "log_in_fav_articles" = "Log in to see your favorite articles";
 "not_connected_internet" = "Not connected to the internet";
 "connection_lost" = "Network connection was lost";

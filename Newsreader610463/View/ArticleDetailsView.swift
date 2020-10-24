@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ArticleDetailsView: View {
-        
+    
     var article: Article
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
@@ -18,7 +18,7 @@ struct ArticleDetailsView: View {
     @ObservedObject var articlesViewModel: ArticlesViewModel
     
     @State var articleDetails: ArticleDetails? = nil
-        
+    
     @State var isLikeButtonPressed: Bool = false
     
     @State var isTryingToLike: Bool = false
@@ -40,9 +40,9 @@ struct ArticleDetailsView: View {
                 ScrollView{
                     VStack(alignment: .center, spacing:2.5) {
                         
-                      UrlImageView(url: articleDetails.image, width: 256, height: 256)
-                        .padding()
-                                            
+                        UrlImageView(url: articleDetails.image, width: 256, height: 256)
+                            .padding()
+                        
                         HStack(spacing:20){
                             Text(articleDetails.title)
                                 .font(.title3)
@@ -59,32 +59,32 @@ struct ArticleDetailsView: View {
                                     Image(systemName: "heart")
                                         .foregroundColor(.gray)
                                 }.font(.system(size: 40))
-                                    .onTapGesture {
-                                        if(!self.isTryingToLike){
-                                            print("liking article")
-                                            self.isTryingToLike = true
-                                            NewsReaderAPI.shared.likeArticle(of: article) { (result) in
-                                                switch result {
-                                                case .success(_):
-                                                    self.isLikeButtonPressed.toggle()
-                                                    self.articlesViewModel.updateArticle(articleId: articleDetails.id, liked: self.isLikeButtonPressed)
-                                                case .failure(_):
-                                                    isRequestErrorViewPresent = true
-                                                    requestErrorViewMessage = "error_liking"
-                                                }
-                                                self.isTryingToLike = false
+                                .onTapGesture {
+                                    if(!self.isTryingToLike){
+                                        print("liking article")
+                                        self.isTryingToLike = true
+                                        NewsReaderAPI.shared.likeArticle(of: article) { (result) in
+                                            switch result {
+                                            case .success(_):
+                                                self.isLikeButtonPressed.toggle()
+                                                self.articlesViewModel.updateArticle(articleId: articleDetails.id, liked: self.isLikeButtonPressed)
+                                            case .failure(_):
+                                                isRequestErrorViewPresent = true
+                                                requestErrorViewMessage = "error_liking"
                                             }
+                                            self.isTryingToLike = false
                                         }
+                                    }
                                 }
                             }
-                    
+                            
                         }.padding()
-
+                        
                         VStack(alignment: .leading){
                             
                             Text(articleDetails.summary!)
                                 .font(.body)
-                              .padding()
+                                .padding()
                             
                             VStack(alignment: .leading){
                                 Text("read_full_article")
@@ -113,9 +113,9 @@ struct ArticleDetailsView: View {
                             }
                         }
                     }
-                }
+            }
         }.navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: MyBackButton(label: "back") {
+        .navigationBarItems(leading: MyBackButton(label: "Back") {
             
             if (self.articlesViewModel is FavoriteArticlesViewModel) {
                 self.articlesViewModel.removeUnlikedArticles()
@@ -128,12 +128,3 @@ struct ArticleDetailsView: View {
         }
     }
 }
-
-/*
-struct ArticleDetailsView_Previews: PreviewProvider {
-    static var previews: some View {
-        
-        ArticleDetailsView(article: article)
-    }
-}
-*/

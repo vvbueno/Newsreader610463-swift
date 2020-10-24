@@ -34,8 +34,6 @@ struct ProfileView: View {
                     Text(" \(userSettings.username ?? "user")")
                 }
 
-                
-                
                 VStack {
                     Button(action: {
                         if(userSettings.lang == "en"){

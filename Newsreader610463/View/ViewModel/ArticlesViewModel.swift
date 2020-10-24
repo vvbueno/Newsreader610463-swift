@@ -14,7 +14,6 @@ class ArticlesViewModel: ObservableObject {
     
     @Published var isLoading = false
     
-    
     func updateArticle(articleId: Int, liked: Bool) {
 
         objectWillChange.send()
@@ -72,16 +71,8 @@ class ArticlesViewModel: ObservableObject {
         case .success(let result):
             self.appendNewArticles(articles: result.articles)
         case .failure(let error):
-            switch error {
-            case .urlError(let urlError):
-                self.appendNewArticles(articles: [])
-            case .decodingError(let decodingError):
-                print(decodingError)
-                self.appendNewArticles(articles: [])
-            case .genericError(let error):
-                print(error)
-                self.appendNewArticles(articles: [])
-            }
+            print(error)
+            self.appendNewArticles(articles: [])
         }
     }
         
