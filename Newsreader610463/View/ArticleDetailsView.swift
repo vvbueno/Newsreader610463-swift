@@ -8,44 +8,77 @@
 import SwiftUI
 
 struct ArticleDetailsView: View {
+        
+    var article: Article
     
-    let article: Article
+    @ObservedObject var model: ArticlesObservable
     
     @State var articleDetails: ArticleDetails? = nil
+        
+    @State var isLikeButtonPressed: Bool = false
     
-    var likeIcon: String {
-        return article.isLiked ? "heart.fill" : "heart"
-    }
+    @State var isTryingToLike: Bool = false
     
-    var likeColor: Color {
-        return article.isLiked ? .red : .gray
+    init(article : Article, model: ArticlesObservable) {
+        self.article = article
+        self.model = model
+        // use this to initialize
+        self._isLikeButtonPressed = State(initialValue: article.isLiked)
     }
     
     var body: some View {
         
         if let articleDetails = articleDetails {
-
+            
             ScrollView{
-                VStack(alignment: .center, spacing:5) {
+                VStack(alignment: .center, spacing:2.5) {
                     
                   UrlImageView(url: articleDetails.image, width: 256, height: 256)
                     .padding()
-                    
-                    HStack(spacing:15){
+                                        
+                    HStack(spacing:20){
                         Text(articleDetails.title)
                             .font(.title3)
                             .fontWeight(.medium)
                             .frame(maxWidth: 200)
                         
-                        Image(systemName: likeIcon)
-                            .resizable()
-                            .frame(width: 36, height: 36)
-                            .foregroundColor(likeColor)
+                        ZStack {
+                            Image(systemName: "heart.fill")
+                                .opacity(isLikeButtonPressed ? 1 : 0)
+                                .scaleEffect(isLikeButtonPressed ? 1.0 : 0.1)
+                                .animation(.linear)
+                            Image(systemName: "heart")
+                                .foregroundColor(.gray)
+                        }.font(.system(size: 40))
+                            .onTapGesture {
+                                
+                                if(!self.isTryingToLike){
+                                    self.isTryingToLike = true
+                                    NewsReaderAPI.shared.likeArticle(of: article) { (result) in
+                                        switch result {
+                                        case .success(_):
+                                            self.articleDetails?.isLiked.toggle()
+                                            self.isLikeButtonPressed.toggle()
+                                            self.model.updateArticle(articleId: articleDetails.id, liked: self.isLikeButtonPressed)
+                                        case .failure(let error):
+                                            switch error {
+                                            case .urlError(let urlError):
+                                                print(urlError)
+                                            case .decodingError(let decodingError):
+                                                print(decodingError)
+                                            case .genericError(let error):
+                                                print(error)
+                                            }
+                                        }
+                                        self.isTryingToLike = false
+                                    }
+                                }
 
+                        }
+                        .foregroundColor(self.articleDetails!.isLiked ? .red : .white)
+                        
                     }.padding()
 
-  
-                    
                     VStack(alignment: .leading){
                         
                         Text(articleDetails.summary!)

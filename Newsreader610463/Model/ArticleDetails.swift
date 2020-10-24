@@ -18,7 +18,7 @@ struct ArticleDetails: Decodable, Identifiable {
     let url: URL
     let related: [String]?
     let categories: [Category]?
-    let isLiked: Bool
+    var isLiked: Bool
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"

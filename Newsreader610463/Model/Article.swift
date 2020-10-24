@@ -12,7 +12,7 @@ struct Article: Decodable, Identifiable {
     let id: Int
     let title: String
     let image: URL?
-    let isLiked: Bool
+    var isLiked: Bool
     
     enum CodingKeys: String, CodingKey {
         case id = "Id"

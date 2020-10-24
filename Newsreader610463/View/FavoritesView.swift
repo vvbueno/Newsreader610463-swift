@@ -11,6 +11,8 @@ struct FavoritesView: View {
     
     @ObservedObject var newsReaderApi = NewsReaderAPI.shared
     
+    
+    
     @State var articles: [Article]? = nil
     
     var body: some View {
@@ -19,7 +21,7 @@ struct FavoritesView: View {
         if newsReaderApi.isAuthenticated{
             VStack{
                 if let articles = articles {
-                    ArticlesListView(articles: articles)
+                   // ArticlesListView(articles: articles)
                 } else {
                     ProgressView("Loadig favorite articles...")
                         .onAppear {

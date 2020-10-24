@@ -52,7 +52,12 @@ final class NewsReaderAPI: ObservableObject {
         }
         
         cancellable = URLSession.shared.dataTaskPublisher(for: request)
-            .map({$0.data})
+            .map { (data, response) in
+                guard data.count > 0 else {
+                    return Data("{}".utf8)
+                }
+                return data
+            }
             .decode(type: Response.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { result in
@@ -76,6 +81,60 @@ final class NewsReaderAPI: ObservableObject {
                 completion(.success(response))
             }
     }
+    
+    /*
+    func execute<Response:Decodable>(
+        request: URLRequest,
+        completion: @escaping (Result<Response, RequestError>) -> Void){
+        
+        var request = request
+        
+        if(isAuthenticated){
+            request.setValue(self.accessToken, forHTTPHeaderField: "x-authtoken")
+        }
+        
+        cancellable = URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap() { element -> Data in
+                guard let httpResponse = element.response as? HTTPURLResponse,
+                    httpResponse.statusCode == 200 else {
+                        throw URLError(.badServerResponse)
+                    }
+                    switch httpResponse.statusCode {
+                    case 200:
+                        print("sucessfull called")
+                        break
+                    case 401:
+                        print("unauthenticated")
+                        throw URLError(.userCancelledAuthentication)
+                    default:
+                        print("bad server error")
+                        throw URLError(.badServerResponse)
+                    }
+                return element.data
+                }
+            .decode(type: Response.self, decoder: JSONDecoder())
+            .sink(receiveCompletion: { result in
+                switch result {
+                case .finished:
+                    break
+                case .failure(let error):
+                    switch error {
+                    case let urlError as URLError:
+                        completion(.failure(RequestError.urlError(urlError)))
+                        print(RequestError.urlError(urlError))
+                    case let decodingError as DecodingError:
+                        completion(.failure(RequestError.decodingError(decodingError)))
+                        print(RequestError.decodingError(decodingError))
+                    default:
+                        completion(.failure(RequestError.genericError(error)))
+                        print(RequestError.genericError(error))
+                    }
+                }
+            }) { response in
+                completion(.success(response))
+            }
+    }
+ */
     
     func login(username: String,
                password: String,
@@ -127,6 +186,25 @@ final class NewsReaderAPI: ObservableObject {
         execute(request: URLRequest(url: url), completion: completion)
     }
     
+    func likeArticle(of article: Article,
+                    completion: @escaping (Result<LikeArticleResponse, RequestError>) -> Void){
+        
+        print("liking article....")
+        
+        let endpointWithId = Endpoints.Articles.likeArticle.replacingOccurrences(of: "{id}", with: String(article.id))
+        
+        let url = URL(string: endpointWithId)!
+        
+        var urlRequest = URLRequest(url: url)
+        
+        if(!article.isLiked){
+            urlRequest.httpMethod = "PUT"
+        } else {
+            urlRequest.httpMethod = "DELETE"
+        }
+        
+        execute(request: urlRequest, completion: completion)
+    }
     
     func getImage(for urlRequest: URLRequest, completion: @escaping (Result<UIImage, RequestError>) -> Void){
         cancellable = URLSession.shared.dataTaskPublisher(for: urlRequest)

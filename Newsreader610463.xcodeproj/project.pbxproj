@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E91EAA1025443E4B00694455 /* ArticlesObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EAA0F25443E4B00694455 /* ArticlesObservable.swift */; };
 		E95B7F8D25422C9100BF2355 /* HomepageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7F8C25422C9100BF2355 /* HomepageView.swift */; };
 		E95B7F9025422DA800BF2355 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7F8F25422DA800BF2355 /* FavoritesView.swift */; };
 		E97D7FCC2534BD5A002E6E4A /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97D7FCB2534BD5A002E6E4A /* LoginRequest.swift */; };
@@ -35,9 +36,11 @@
 		E9C74E5A253E1EAE0003E088 /* ArticlesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E59253E1EAE0003E088 /* ArticlesListView.swift */; };
 		E9C74E5F253E25300003E088 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E5E253E25300003E088 /* Endpoints.swift */; };
 		E9C74E62253E38E90003E088 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C74E61253E38E90003E088 /* LoginView.swift */; };
+		E9D75D9025433453004D8159 /* LikeArticleResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9D75D8F25433453004D8159 /* LikeArticleResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E91EAA0F25443E4B00694455 /* ArticlesObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesObservable.swift; sourceTree = "<group>"; };
 		E95B7F8C25422C9100BF2355 /* HomepageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageView.swift; sourceTree = "<group>"; };
 		E95B7F8F25422DA800BF2355 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		E97D7FCB2534BD5A002E6E4A /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
@@ -67,6 +70,7 @@
 		E9C74E59253E1EAE0003E088 /* ArticlesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesListView.swift; sourceTree = "<group>"; };
 		E9C74E5E253E25300003E088 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		E9C74E61253E38E90003E088 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		E9D75D8F25433453004D8159 /* LikeArticleResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeArticleResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +102,7 @@
 				E97D7FE2253504A3002E6E4A /* RegisterResponse.swift */,
 				E97D7FE5253504F2002E6E4A /* LoginResponse.swift */,
 				E97D7FE825350547002E6E4A /* GetFeedsResponse.swift */,
+				E9D75D8F25433453004D8159 /* LikeArticleResponse.swift */,
 			);
 			path = Responses;
 			sourceTree = "<group>";
@@ -192,6 +197,7 @@
 				E9C74E50253E161D0003E088 /* UrlImageView.swift */,
 				E9C74E61253E38E90003E088 /* LoginView.swift */,
 				E95B7F8C25422C9100BF2355 /* HomepageView.swift */,
+				E91EAA0F25443E4B00694455 /* ArticlesObservable.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -287,11 +293,13 @@
 				E97D7FCC2534BD5A002E6E4A /* LoginRequest.swift in Sources */,
 				E97D7FE925350547002E6E4A /* GetFeedsResponse.swift in Sources */,
 				E9C74E4D253E15B60003E088 /* ImageCache.swift in Sources */,
+				E91EAA1025443E4B00694455 /* ArticlesObservable.swift in Sources */,
 				E97D7FD32534E52B002E6E4A /* GetArticlesListResponse.swift in Sources */,
 				E97D7FDD2534E8D3002E6E4A /* Category.swift in Sources */,
 				E9C74E51253E161D0003E088 /* UrlImageView.swift in Sources */,
 				E97D7FE6253504F2002E6E4A /* LoginResponse.swift in Sources */,
 				E97D7FE02534EE36002E6E4A /* RequestError.swift in Sources */,
+				E9D75D9025433453004D8159 /* LikeArticleResponse.swift in Sources */,
 				E95B7F9025422DA800BF2355 /* FavoritesView.swift in Sources */,
 				E9C74E2D253B3FDF0003E088 /* ArticleDetails.swift in Sources */,
 				E9C74E5A253E1EAE0003E088 /* ArticlesListView.swift in Sources */,
