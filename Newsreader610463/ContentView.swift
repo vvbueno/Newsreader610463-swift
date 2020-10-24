@@ -22,7 +22,7 @@ struct ContentView: View {
                     Image(systemName: "escape")
                 }),
                 trailing: NavigationLink(
-                    destination: Text("Favorites"), // FavoritesView(),
+                    destination: FavoritesView(),
                     label: {
                         Image(systemName: "heart.fill")
                             .foregroundColor(.red)

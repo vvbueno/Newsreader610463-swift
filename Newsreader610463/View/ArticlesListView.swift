@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ArticlesListView: View {
     
-    @ObservedObject var articles: ArticlesObservable
+    @ObservedObject var articlesViewModel: ArticlesViewModel
     
     let columns = [
         GridItem(.adaptive(minimum: 250),
@@ -20,9 +20,9 @@ struct ArticlesListView: View {
     var body: some View {
         ScrollView{
             LazyVGrid(columns: columns, spacing: 0){
-                ForEach(articles.items) { article in
+                ForEach(articlesViewModel.articles!) { article in
                     NavigationLink(destination:
-                                    ArticleDetailsView(article: article, model: self.articles).environmentObject(self.articles)
+                                    ArticleDetailsView(article: article, articlesViewModel: self.articlesViewModel).environmentObject(self.articlesViewModel)
                             .navigationTitle(article.title)
                     ) {
                         AritcleRowView(article: article)

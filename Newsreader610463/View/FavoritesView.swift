@@ -11,43 +11,29 @@ struct FavoritesView: View {
     
     @ObservedObject var newsReaderApi = NewsReaderAPI.shared
     
-    
-    
-    @State var articles: [Article]? = nil
+    @ObservedObject var articlesViewModel: FavoriteArticlesViewModel = FavoriteArticlesViewModel()
     
     var body: some View {
         
-        
-        if newsReaderApi.isAuthenticated{
-            VStack{
-                if let articles = articles {
-                   // ArticlesListView(articles: articles)
+        VStack {
+            if newsReaderApi.isAuthenticated{
+                if articlesViewModel.articles != nil && articlesViewModel.isLoading == false {
+                    
+                    if(articlesViewModel.articles!.count > 0){
+                        ArticlesListView(articlesViewModel: self.articlesViewModel)
+                    }else{
+                        Text("No favorite articles lol")
+                    }
                 } else {
                     ProgressView("Loadig favorite articles...")
                         .onAppear {
-                            NewsReaderAPI.shared.getLikedArticlesList() { (result) in
-                                switch result {
-                                case .success(let result):
-                                    self.articles = result.articles
-                                case .failure(let error):
-                                    switch error {
-                                    case .urlError(let urlError):
-                                        print(urlError)
-                                    case .decodingError(let decodingError):
-                                        print(decodingError)
-                                    case .genericError(let error):
-                                        print(error)
-                                    }
-                                }
-                            }
+                            self.articlesViewModel.fetchLikedArticles()
                         }
                 }
-            }.navigationTitle("List of favorite articles")
-        } else {
-            VStack {
+            } else {
                 Text("Log in to see your favorite articles")
-            }.navigationTitle("List of favorite articles")
-        }
+            }
+        }.navigationTitle("Favorite articles")
     }
     
 }

@@ -9,23 +9,27 @@ import SwiftUI
 
 struct HomepageView: View {
     
-    //@State var articles: [Article]? = nil
-    
-    @ObservedObject var articles: ArticlesObservable = ArticlesObservable()
+    @ObservedObject var articlesViewModel: ArticlesViewModel = ArticlesViewModel()
     
     var body: some View {
         
         VStack{
             
-            if articles.items.count > 0 {
-                ArticlesListView(articles: self.articles)
+            if articlesViewModel.articles != nil && articlesViewModel.isLoading == false {
+                
+                if(articlesViewModel.articles!.count > 0){
+                    ArticlesListView(articlesViewModel: self.articlesViewModel)
+                }else{
+                    Text("No articles lol")
+                }
+                
             } else {
-                ProgressView("Loadig articles...")
+                ProgressView("Loading articles...")
                     .onAppear {
-                        self.articles.fetchArticles()
+                        self.articlesViewModel.fetchArticles()
                     }
             }
-        }.navigationTitle("List of articles")
+        }.navigationTitle("Latest articles")
     }
 }
 

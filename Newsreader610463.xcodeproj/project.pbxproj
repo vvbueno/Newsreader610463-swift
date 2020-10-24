@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E91EAA1025443E4B00694455 /* ArticlesObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EAA0F25443E4B00694455 /* ArticlesObservable.swift */; };
+		E91EAA1325446F7800694455 /* ArticlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EAA1225446F7800694455 /* ArticlesViewModel.swift */; };
+		E91EAA19254486AD00694455 /* BackButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EAA18254486AD00694455 /* BackButtonView.swift */; };
+		E91EAA1D25448DA000694455 /* FavoriteArticlesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91EAA1C25448DA000694455 /* FavoriteArticlesViewModel.swift */; };
 		E95B7F8D25422C9100BF2355 /* HomepageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7F8C25422C9100BF2355 /* HomepageView.swift */; };
 		E95B7F9025422DA800BF2355 /* FavoritesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95B7F8F25422DA800BF2355 /* FavoritesView.swift */; };
 		E97D7FCC2534BD5A002E6E4A /* LoginRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E97D7FCB2534BD5A002E6E4A /* LoginRequest.swift */; };
@@ -40,7 +42,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		E91EAA0F25443E4B00694455 /* ArticlesObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesObservable.swift; sourceTree = "<group>"; };
+		E91EAA1225446F7800694455 /* ArticlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticlesViewModel.swift; sourceTree = "<group>"; };
+		E91EAA18254486AD00694455 /* BackButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButtonView.swift; sourceTree = "<group>"; };
+		E91EAA1C25448DA000694455 /* FavoriteArticlesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteArticlesViewModel.swift; sourceTree = "<group>"; };
 		E95B7F8C25422C9100BF2355 /* HomepageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomepageView.swift; sourceTree = "<group>"; };
 		E95B7F8F25422DA800BF2355 /* FavoritesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesView.swift; sourceTree = "<group>"; };
 		E97D7FCB2534BD5A002E6E4A /* LoginRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRequest.swift; sourceTree = "<group>"; };
@@ -85,6 +89,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E91EAA1F25448F8A00694455 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				E91EAA1225446F7800694455 /* ArticlesViewModel.swift */,
+				E91EAA1C25448DA000694455 /* FavoriteArticlesViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		E91EAA2025448FAD00694455 /* UIElements */ = {
+			isa = PBXGroup;
+			children = (
+				E9C74E50253E161D0003E088 /* UrlImageView.swift */,
+				E91EAA18254486AD00694455 /* BackButtonView.swift */,
+			);
+			path = UIElements;
+			sourceTree = "<group>";
+		};
 		E97D7FC72534BC6C002E6E4A /* Requests */ = {
 			isa = PBXGroup;
 			children = (
@@ -190,14 +212,14 @@
 		E9C74E58253E1E780003E088 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E91EAA2025448FAD00694455 /* UIElements */,
+				E91EAA1F25448F8A00694455 /* ViewModel */,
 				E981CA9F2539EFDC004607C6 /* ArticleDetailsView.swift */,
 				E9C74E59253E1EAE0003E088 /* ArticlesListView.swift */,
 				E95B7F8F25422DA800BF2355 /* FavoritesView.swift */,
 				E9C74E35253B5B630003E088 /* AritcleRowView.swift */,
-				E9C74E50253E161D0003E088 /* UrlImageView.swift */,
 				E9C74E61253E38E90003E088 /* LoginView.swift */,
 				E95B7F8C25422C9100BF2355 /* HomepageView.swift */,
-				E91EAA0F25443E4B00694455 /* ArticlesObservable.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -285,6 +307,7 @@
 				E9C74E30253B41640003E088 /* GetArticleDetailsResponse.swift in Sources */,
 				E9C74E48253E15350003E088 /* UrlImage.swift in Sources */,
 				E97D7FE3253504A3002E6E4A /* RegisterResponse.swift in Sources */,
+				E91EAA1D25448DA000694455 /* FavoriteArticlesViewModel.swift in Sources */,
 				E9C74E36253B5B630003E088 /* AritcleRowView.swift in Sources */,
 				E9C74E62253E38E90003E088 /* LoginView.swift in Sources */,
 				E97D7FDA2534E8C8002E6E4A /* Feed.swift in Sources */,
@@ -292,8 +315,9 @@
 				E9C74E5F253E25300003E088 /* Endpoints.swift in Sources */,
 				E97D7FCC2534BD5A002E6E4A /* LoginRequest.swift in Sources */,
 				E97D7FE925350547002E6E4A /* GetFeedsResponse.swift in Sources */,
+				E91EAA1325446F7800694455 /* ArticlesViewModel.swift in Sources */,
+				E91EAA19254486AD00694455 /* BackButtonView.swift in Sources */,
 				E9C74E4D253E15B60003E088 /* ImageCache.swift in Sources */,
-				E91EAA1025443E4B00694455 /* ArticlesObservable.swift in Sources */,
 				E97D7FD32534E52B002E6E4A /* GetArticlesListResponse.swift in Sources */,
 				E97D7FDD2534E8D3002E6E4A /* Category.swift in Sources */,
 				E9C74E51253E161D0003E088 /* UrlImageView.swift in Sources */,
