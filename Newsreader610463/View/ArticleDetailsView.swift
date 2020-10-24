@@ -13,6 +13,8 @@ struct ArticleDetailsView: View {
     
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    @ObservedObject var newsReaderApi = NewsReaderAPI.shared
+    
     @ObservedObject var articlesViewModel: ArticlesViewModel
     
     @State var articleDetails: ArticleDetails? = nil
@@ -21,10 +23,12 @@ struct ArticleDetailsView: View {
     
     @State var isTryingToLike: Bool = false
     
+    @State var isRequestErrorViewPresent: Bool = false
+    @State var requestErrorViewMessage: String? = nil
+    
     init(article : Article, articlesViewModel: ArticlesViewModel) {
         self.article = article
         self.articlesViewModel = articlesViewModel
-        // use this to initialize
         self._isLikeButtonPressed = State(initialValue: article.isLiked)
     }
     
@@ -45,37 +49,35 @@ struct ArticleDetailsView: View {
                                 .fontWeight(.medium)
                                 .frame(maxWidth: 200)
                             
-                            ZStack {
-                                Image(systemName: "heart.fill")
-                                    .opacity(isLikeButtonPressed ? 1 : 0)
-                                    .scaleEffect(isLikeButtonPressed ? 1.0 : 0.1)
-                                    .animation(.linear)
-                                Image(systemName: "heart")
-                                    .foregroundColor(.gray)
-                            }.font(.system(size: 40))
-                                .onTapGesture {
-                                    if(!self.isTryingToLike){
-                                        self.isTryingToLike = true
-                                        NewsReaderAPI.shared.likeArticle(of: article) { (result) in
-                                            switch result {
-                                            case .success(_):
-                                                self.isLikeButtonPressed.toggle()
-                                                self.articlesViewModel.updateArticle(articleId: articleDetails.id, liked: self.isLikeButtonPressed)
-                                            case .failure(let error):
-                                                switch error {
-                                                case .urlError(let urlError):
-                                                    print(urlError)
-                                                case .decodingError(let decodingError):
-                                                    print(decodingError)
-                                                case .genericError(let error):
-                                                    print(error)
+                            if newsReaderApi.isAuthenticated{
+                                ZStack {
+                                    Image(systemName: "heart.fill")
+                                        .opacity(isLikeButtonPressed ? 1 : 0)
+                                        .scaleEffect(isLikeButtonPressed ? 1.0 : 0.1)
+                                        .foregroundColor(.red)
+                                        .animation(.linear)
+                                    Image(systemName: "heart")
+                                        .foregroundColor(.gray)
+                                }.font(.system(size: 40))
+                                    .onTapGesture {
+                                        if(!self.isTryingToLike){
+                                            print("liking article")
+                                            self.isTryingToLike = true
+                                            NewsReaderAPI.shared.likeArticle(of: article) { (result) in
+                                                switch result {
+                                                case .success(_):
+                                                    self.isLikeButtonPressed.toggle()
+                                                    self.articlesViewModel.updateArticle(articleId: articleDetails.id, liked: self.isLikeButtonPressed)
+                                                case .failure(_):
+                                                    isRequestErrorViewPresent = true
+                                                    requestErrorViewMessage = "error_liking"
                                                 }
+                                                self.isTryingToLike = false
                                             }
-                                            self.isTryingToLike = false
                                         }
-                                    }
+                                }
                             }
-                            .foregroundColor(self.articleDetails!.isLiked ? .red : .white)
+                    
                         }.padding()
 
                         VStack(alignment: .leading){
@@ -85,7 +87,7 @@ struct ArticleDetailsView: View {
                               .padding()
                             
                             VStack(alignment: .leading){
-                                Text("Read full article at: ")
+                                Text("read_full_article")
                                 Button(action: {
                                     UIApplication.shared.open(articleDetails.url)
                                 }) {
@@ -95,37 +97,35 @@ struct ArticleDetailsView: View {
                             
                         }.padding()
                     }
-                }
+                }.padding()
                 
             } else {
-                ProgressView("Loadig details...")
+                ProgressView("loading_article_details")
                     .onAppear {
                         NewsReaderAPI.shared.getArticleDetails(of: article) { (result) in
                             switch result {
                             case .success(let result):
                                 self.articleDetails = result.articles.first
-                            case .failure(let error):
-                                switch error {
-                                case .urlError(let urlError):
-                                    print(urlError)
-                                case .decodingError(let decodingError):
-                                    print(decodingError)
-                                case .genericError(let error):
-                                    print(error)
-                                }
+                            case .failure(_):
+                                isRequestErrorViewPresent = true
+                                requestErrorViewMessage = "error_fetching_article"
+                                self.mode.wrappedValue.dismiss()
                             }
                         }
                     }
+                }
+        }.navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: MyBackButton(label: "back") {
+            
+            if (self.articlesViewModel is FavoriteArticlesViewModel) {
+                self.articlesViewModel.removeUnlikedArticles()
             }
-    }.navigationBarBackButtonHidden(true)
-    .navigationBarItems(leading: MyBackButton(label: "Back") {
-        
-        if (self.articlesViewModel is FavoriteArticlesViewModel) {
-            self.articlesViewModel.removeUnlikedArticles()
+            
+            self.mode.wrappedValue.dismiss()
+        }).padding()
+        .alert(isPresented: $isRequestErrorViewPresent){
+            Alert(title: Text("failure"), message: Text(requestErrorViewMessage ?? "generic_error"), dismissButton: .default(Text("OK")))
         }
-        
-        self.mode.wrappedValue.dismiss()
-    })
     }
 }
 

@@ -22,18 +22,18 @@ struct FavoritesView: View {
                     if(articlesViewModel.articles!.count > 0){
                         ArticlesListView(articlesViewModel: self.articlesViewModel)
                     }else{
-                        Text("No favorite articles lol")
+                        Text("fav_articles_not_found")
                     }
                 } else {
-                    ProgressView("Loadig favorite articles...")
+                    ProgressView("loading_fav_articles")
                         .onAppear {
                             self.articlesViewModel.fetchLikedArticles()
                         }
                 }
             } else {
-                Text("Log in to see your favorite articles")
+                Text("log_in_fav_articles")
             }
-        }.navigationTitle("Favorite articles")
+        }.navigationTitle("favorite_articles")
     }
     
 }

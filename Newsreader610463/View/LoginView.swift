@@ -13,35 +13,60 @@ struct LoginView: View {
     @State var username: String = ""
     @State var password: String = ""
     @State var isTryingToLogin: Bool = false
-    @State var isRequestErrorViewPresented: Bool = false
+    @State var isRequestErrorViewPresent: Bool = false
+    @State var requestErrorViewMessage: String? = nil
+    @ObservedObject var userSettings = UserSettings.shared
     
     var body: some View {
         VStack {
             if isTryingToLogin {
-                ProgressView("Trying to login...")
+                ProgressView("trying_login")
             } else {
-                TextField("Enter username", text: $username)
+                TextField("enter_username", text: $username)
                     .padding()
                     .border(Color.black.opacity(0.2), width: 1)
                     .cornerRadius(/*@START_MENU_TOKEN@*/3.0/*@END_MENU_TOKEN@*/)
-                SecureField("Enter password", text: $password)
+                SecureField("enter_password", text: $password)
                     .padding()
                     .border(Color.black.opacity(0.2), width: 1)
                     .cornerRadius(/*@START_MENU_TOKEN@*/3.0/*@END_MENU_TOKEN@*/)
                 Button(action:{
                     isTryingToLogin = true
+                    
+                    if(username.isEmpty || password.isEmpty){
+                        isRequestErrorViewPresent = true
+                        requestErrorViewMessage = "fields_required"
+                        isTryingToLogin = false
+                        return
+                    }
+                    
                     NewsReaderAPI.shared.login(username: username, password: password) {(result) in
                         switch result {
                         case .success(let response):
                             NewsReaderAPI.shared.accessToken = response.authToken
+                            userSettings.username = username
                             self.presentationMode.wrappedValue.dismiss()
-                        case .failure(_):
-                            self.isRequestErrorViewPresented = true
+                        case .failure(let error):
+                            self.isRequestErrorViewPresent = true
+                            switch error {
+                            case .urlError(let urlError):
+                                switch URLError.Code(rawValue: urlError.errorCode) {
+                                case .notConnectedToInternet:
+                                    self.requestErrorViewMessage = "not_connected_internet"
+                                case .networkConnectionLost:
+                                    self.requestErrorViewMessage = "connection_lost"
+                                default:
+                                    self.requestErrorViewMessage = "login_fail"
+                                    break
+                                }
+                            default:
+                                self.requestErrorViewMessage = "login_fail"
+                            }
                         }
                         self.isTryingToLogin = false
                     }
                 }, label: {
-                    SwiftUI.Text("Login")
+                    SwiftUI.Text("log_in")
                         .frame(maxWidth: .infinity, minHeight: 44)
                         .foregroundColor(.white)
                 })
@@ -51,10 +76,10 @@ struct LoginView: View {
             
         }
         .padding()
-        .alert(isPresented: $isRequestErrorViewPresented){
-            Alert(title: Text("Failure"), message: Text("Couldn't Login"), dismissButton: .default(Text("OK")))
+        .alert(isPresented: $isRequestErrorViewPresent){
+            Alert(title: Text("failure"), message: Text(requestErrorViewMessage ?? "login_fail"), dismissButton: .default(Text("OK")))
         }
-        .navigationTitle("Login")
+        .navigationTitle("log_in")
     }
 }
 

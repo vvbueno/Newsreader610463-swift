@@ -23,7 +23,6 @@ struct ArticlesListView: View {
                 ForEach(articlesViewModel.articles!) { article in
                     NavigationLink(destination:
                                     ArticleDetailsView(article: article, articlesViewModel: self.articlesViewModel).environmentObject(self.articlesViewModel)
-                            .navigationTitle(article.title)
                     ) {
                         AritcleRowView(article: article)
                             .padding()

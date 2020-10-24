@@ -55,6 +55,18 @@ class ArticlesViewModel: ObservableObject {
         }
     }
     
+    func refresh() {
+        objectWillChange.send()
+        self.isLoading = true
+        
+        self.articles?.removeAll()
+        
+        NewsReaderAPI.shared.getArticlesList() { (result) in
+            self.handleApiResult(result: result)
+            self.isLoading = false
+        }
+    }
+    
     internal func handleApiResult(result: Result<GetArticlesListResponse, RequestError>){
         switch result {
         case .success(let result):
@@ -62,7 +74,6 @@ class ArticlesViewModel: ObservableObject {
         case .failure(let error):
             switch error {
             case .urlError(let urlError):
-                print(urlError)
                 self.appendNewArticles(articles: [])
             case .decodingError(let decodingError):
                 print(decodingError)

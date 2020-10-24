@@ -10,35 +10,10 @@ import SwiftUI
 struct ContentView: View {
     
     @ObservedObject var newsReaderApi = NewsReaderAPI.shared
+    @ObservedObject var userSettings = UserSettings.shared
     
     var body: some View {
-        NavigationView{
-            
-            if newsReaderApi.isAuthenticated{
-                VStack {
-                    HomepageView()
-                }.navigationTitle("News Reader")
-                .navigationBarItems(leading: Button(action: { newsReaderApi.logout() }, label: {
-                    Image(systemName: "escape")
-                }),
-                trailing: NavigationLink(
-                    destination: FavoritesView(),
-                    label: {
-                        Image(systemName: "heart.fill")
-                            .foregroundColor(.red)
-                    }))
-            } else {
-                VStack {
-                    HomepageView()
-                }.navigationTitle("News Reader")
-                .navigationBarItems(trailing: NavigationLink(
-                    destination: LoginView(),
-                    label: {
-                        Text("Log in")
-                    }
-                ))
-            }
-        }
+        HomepageView().environment(\.locale, .init(identifier: userSettings.lang))
     }
 }
 
