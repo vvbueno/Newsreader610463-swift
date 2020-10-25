@@ -68,7 +68,7 @@
 		E97D7FE5253504F2002E6E4A /* LoginResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResponse.swift; sourceTree = "<group>"; };
 		E97D7FE825350547002E6E4A /* GetFeedsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetFeedsResponse.swift; sourceTree = "<group>"; };
 		E981CA9F2539EFDC004607C6 /* ArticleDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleDetailsView.swift; sourceTree = "<group>"; };
-		E98551922533718F00059CD4 /* Newsreader610463.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Newsreader610463.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E98551922533718F00059CD4 /* 610463.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 610463.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E98551952533718F00059CD4 /* Newsreader610463App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Newsreader610463App.swift; sourceTree = "<group>"; };
 		E98551972533718F00059CD4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E98551992533719200059CD4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 		E98551932533718F00059CD4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E98551922533718F00059CD4 /* Newsreader610463.app */,
+				E98551922533718F00059CD4 /* 610463.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -251,9 +251,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E98551912533718E00059CD4 /* Newsreader610463 */ = {
+		E98551912533718E00059CD4 /* 610463 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E98551A12533719200059CD4 /* Build configuration list for PBXNativeTarget "Newsreader610463" */;
+			buildConfigurationList = E98551A12533719200059CD4 /* Build configuration list for PBXNativeTarget "610463" */;
 			buildPhases = (
 				E985518E2533718E00059CD4 /* Sources */,
 				E985518F2533718E00059CD4 /* Frameworks */,
@@ -263,12 +263,12 @@
 			);
 			dependencies = (
 			);
-			name = Newsreader610463;
+			name = 610463;
 			packageProductDependencies = (
 				E98551AA25337B0600059CD4 /* KeychainAccess */,
 			);
 			productName = Newsreader610463;
-			productReference = E98551922533718F00059CD4 /* Newsreader610463.app */;
+			productReference = E98551922533718F00059CD4 /* 610463.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -285,7 +285,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E985518D2533718E00059CD4 /* Build configuration list for PBXProject "Newsreader610463" */;
+			buildConfigurationList = E985518D2533718E00059CD4 /* Build configuration list for PBXProject "610463" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -302,7 +302,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E98551912533718E00059CD4 /* Newsreader610463 */,
+				E98551912533718E00059CD4 /* 610463 */,
 			);
 		};
 /* End PBXProject section */
@@ -543,7 +543,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E985518D2533718E00059CD4 /* Build configuration list for PBXProject "Newsreader610463" */ = {
+		E985518D2533718E00059CD4 /* Build configuration list for PBXProject "610463" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E985519F2533719200059CD4 /* Debug */,
@@ -552,7 +552,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E98551A12533719200059CD4 /* Build configuration list for PBXNativeTarget "Newsreader610463" */ = {
+		E98551A12533719200059CD4 /* Build configuration list for PBXNativeTarget "610463" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E98551A22533719200059CD4 /* Debug */,
